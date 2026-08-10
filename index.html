@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Potato Coder - Turning raw logic into crisp, high-performance software.">
+    <title>Potato Coder | Enterprise Software Craftsmanship</title>
+    <style>
+        /* Design System Variables */
+        :root {
+            --primary: #d4a373; 
+            --primary-dark: #b58253;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-light: #f4f1de;
+            --text-muted: #a0a0a0;
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-stack);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* BLOCK: Layout Container */
+        .l-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* BLOCK: Header */
+        .c-header {
+            border-bottom: 1px solid #2a2a2a;
+            position: sticky;
+            top: 0;
+            background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+        }
+        .c-header__wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        .c-header__logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .c-header__menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        .c-header__toggle-bar {
+            width: 24px;
+            height: 2px;
+            background-color: var(--text-light);
+            transition: var(--transition);
+        }
+        .c-header__nav-list {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        /* MODIFIER: Active/Open Mobile Menu */
+        .c-header__nav-list--is-open {
+            display: flex !important;
+        }
+        .c-header__nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .c-header__nav-link:hover {
+            color: var(--primary);
+        }
+
+        /* BLOCK: Hero Section */
+        .c-hero {
+            padding: 8rem 0 5rem;
+            text-align: center;
+        }
+        .c-hero__title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .c-hero__title-accent {
+            color: var(--primary);
+        }
+        .c-hero__description {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* BLOCK: Button */
+        .c-button {
+            background-color: var(--primary);
+            color: #121212;
+            padding: 0.85rem 2rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+        .c-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        /* MODIFIER: Hero placement button variant if needed later */
+        .c-button--hero {
+            box-shadow: 0 4px 14px rgba(212, 163, 115, 0.2);
+        }
+
+        /* BLOCK: Features Grid */
+        .c-features {
+            padding: 5rem 0;
+        }
+        .c-features__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* BLOCK: Card */
+        .c-card {
+            background-color: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border: 1px solid #2a2a2a;
+            transition: var(--transition);
+        }
+        .c-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+        }
+        .c-card__title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        .c-card__description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Breakpoints using BEM Context */
+        @media (max-width: 768px) {
+            .c-hero__title {
+                font-size: 2.5rem;
+            }
+
+            .c-header__menu-toggle {
+                display: flex;
+            }
+
+            .c-header__nav-list {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-dark);
+                border-bottom: 1px solid #2a2a2a;
+                padding: 2rem;
+                gap: 1.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="c-header">
+        <div class="l-container c-header__wrapper">
+            <a href="#" class="c-header__logo">🥔 Potato Coder</a>
+            <button class="c-header__menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+                <span class="c-header__toggle-bar"></span>
+                <span class="c-header__toggle-bar"></span>
+                <span class="c-header__toggle-bar"></span>
+            </button>
+            <ul class="c-header__nav-list" id="navLinks">
+                <li><a href="#about" class="c-header__nav-link">About</a></li>
+                <li><a href="#services" class="c-header__nav-link">Core Capabilities</a></li>
+                <li><a href="#contact" class="c-header__nav-link">Initialize Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <section class="l-container c-hero" id="about">
+            <h1 class="c-hero__title">Sprouting Scalable <span class="c-hero__title-accent">Code Architectures</span></h1>
+            <p class="c-hero__description">We are a high-performance organization engineering robust software infrastructure from scratch. No fluff, just pure deterministic output.</p>
+            <button class="c-button c-button--hero" id="ctaButton">Execute Mission</button>
+        </section>
+
+        <section class="l-container c-features" id="services">
+            <div class="c-features__grid">
+                <div class="c-card">
+                    <h3 class="c-card__title">🥔 Deeply Rooted Logic</h3>
+                    <p class="c-card__description">We build predictable systems optimized for high throughput, minimal overhead, and absolute system reliability.</p>
+                </div>
+                <div class="c-card">
+                    <h3 class="c-card__title">⚡ Crisp Performance</h3>
+                    <p class="c-card__description">Engineered layers designed to minimize tail latency and optimize compute utilization across distributed clouds.</p>
+                </div>
+                <div class="c-card">
+                    <h3 class="c-card__title">🛡️ Hardened Skins</h3>
+                    <p class="c-card__description">Zero trust parameters baked directly into our pipelines, establishing absolute runtime isolation and data security.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const DOM = {
+                menuToggle: document.getElementById('menuToggle'),
+                navLinks: document.getElementById('navLinks'),
+                ctaButton: document.getElementById('ctaButton')
+            };
+
+            const toggleNavigation = () => {
+                const isOpened = DOM.navLinks.classList.toggle('c-header__nav-list--is-open');
+                DOM.menuToggle.setAttribute('aria-expanded', isOpened);
+            };
+
+            DOM.menuToggle.addEventListener('click', toggleNavigation);
+
+            DOM.ctaButton.addEventListener('click', () => {
+                alert('Initialization sequence deployed. Welcome to Potato Coder.');
+            });
+
+            DOM.navLinks.querySelectorAll('.c-header__nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    DOM.navLinks.classList.remove('c-header__nav-list--is-open');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
