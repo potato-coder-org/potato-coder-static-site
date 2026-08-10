@@ -3,25 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Potato Coder - Turning raw logic into crisp, high-performance software.">
-    <title>Potato Coder | Enterprise Software Craftsmanship</title>
+    <meta name="description" content="Potato Coder - System & Application Development. Engineering high-scale, fault-tolerant enterprise architectures.">
+    <title>Potato Coder | System & Application Development</title>
     <style>
-        /* Design System Variables & Global Layout Reset */
+        /* ==========================================================================
+           DESIGN SYSTEM VARIABLES & PALETTE SETUP (Blends with Logo)
+           ========================================================================== */
         :root {
-            --primary: #d4a373; 
-            --primary-dark: #b58253;
-            --bg-dark: #121212;
-            --bg-card: #1e1e1e;
-            --text-light: #f4f1de;
-            --text-muted: #a0a0a0;
-            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --primary: #52e5d5;        /* Radiant Cyber Cyan from Logo Glow */
+            --primary-dark: #2cb5a7;   /* Secondary Deep Cyan Circuit Track */
+            --bg-dark: #071120;        /* Deep Circuit Blue Base from Logo Canvas */
+            --bg-card: #0d1e36;        /* Structured Element Box Matrix Blue */
+            --text-light: #ffffff;     /* High-Contrast Crisp White Text */
+            --text-muted: #6b829e;     /* Technical Soft Steel Secondary Blue */
+            --border-glow: rgba(82, 229, 213, 0.15);
+            --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* External Path Reference for the Standalone Vector Engine */
+            --logo-url: url("assets/logo.svg");
         }
+
+        /* Global Reset Rules */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: var(--font-stack);
             background-color: var(--bg-dark);
@@ -30,18 +39,24 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
+
+        /* BLOCK: Layout Containers */
         .l-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
-        /* BLOCK: Header Component */
+        /* ==========================================================================
+           BEM LAYOUT CORE COMPONENTS
+           ========================================================================== */
+        
+        /* BLOCK: Header Subsystem */
         .c-header {
-            border-bottom: 1px solid #2a2a2a;
+            border-bottom: 1px solid #142a4a;
             position: sticky;
             top: 0;
-            background: rgba(18, 18, 18, 0.8);
+            background: rgba(7, 17, 32, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             z-index: 1000;
@@ -50,16 +65,30 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 70px;
+            height: 80px;
         }
+        
+        /* LOCKED COMPONENT: Corporate Logo Identity (Isolated from state underlining) */
         .c-header__logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 900;
+            font-size: 1.2rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            border-bottom: none !important; /* Explicit layout safety override */
+        }
+        .c-header__logo-img {
+            width: 42px;
+            height: 42px;
+            background-image: var(--logo-url);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: inline-block;
         }
         .c-header__menu-toggle {
             display: none;
@@ -68,11 +97,12 @@
             background: none;
             border: none;
             cursor: pointer;
+            outline: none;
         }
         .c-header__toggle-bar {
             width: 24px;
             height: 2px;
-            background-color: var(--text-light);
+            background-color: var(--primary);
             transition: var(--transition);
         }
         .c-header__nav-list {
@@ -80,13 +110,12 @@
             gap: 2rem;
             list-style: none;
         }
-        .c-header__nav-list--is-open {
-            display: flex !important;
-        }
         .c-header__nav-link {
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
             transition: var(--transition);
             padding: 0.5rem 0;
             border-bottom: 2px solid transparent;
@@ -94,127 +123,193 @@
         .c-header__nav-link:hover {
             color: var(--primary);
         }
+        /* MODIFIER: Active Nav Page State Selector (Applies only to links, ignores logo) */
         .c-header__nav-link--is-active {
             color: var(--primary) !important;
             border-bottom: 2px solid var(--primary);
-            font-weight: 600;
+            text-shadow: 0 0 10px rgba(82, 229, 213, 0.4);
         }
 
-        /* BLOCK: Router Target View Container */
+        /* BLOCK: Router Mounting Port View */
         .c-router-view {
-            min-height: calc(100vh - 70px);
+            min-height: calc(100vh - 80px);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* BLOCK: Hero Elements layout */
+        /* BLOCK: Hero Structural Section */
         .c-hero {
-            padding: 5rem 0;
+            padding: 4rem 0;
             text-align: center;
-            animation: fadeIn 0.3s ease-out forwards;
+            animation: circuitBoot 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .c-hero__logo-canvas {
+            width: 100%;
+            max-width: 320px;
+            height: 220px;
+            background-image: var(--logo-url);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0 auto 2.5rem;
         }
         .c-hero__title {
             font-size: 3.5rem;
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 1.15;
             margin-bottom: 1.5rem;
             letter-spacing: -0.02em;
+            color: var(--text-light);
         }
         .c-hero__title-accent {
             color: var(--primary);
+            text-shadow: 0 0 30px rgba(82, 229, 213, 0.25);
         }
         .c-hero__description {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             color: var(--text-muted);
-            max-width: 600px;
+            max-width: 680px;
             margin: 0 auto 2.5rem;
         }
 
-        /* BLOCK: Button Action Component */
+        /* BLOCK: Interaction Button Component */
         .c-button {
             background-color: var(--primary);
-            color: #121212;
-            padding: 0.85rem 2rem;
-            border-radius: 6px;
-            font-weight: 600;
+            color: var(--bg-dark);
+            padding: 0.95rem 2.4rem;
+            border-radius: 4px;
+            font-weight: 700;
             text-decoration: none;
             display: inline-block;
             transition: var(--transition);
-            border: none;
+            border: 1px solid var(--primary);
             cursor: pointer;
+            box-shadow: 0 4px 14px rgba(82, 229, 213, 0.2);
+            letter-spacing: 0.05em;
         }
         .c-button:hover {
-            background-color: var(--primary-dark);
+            background-color: transparent;
+            color: var(--primary);
             transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(82, 229, 213, 0.35);
         }
 
-        /* BLOCK: Capabilities Grid Component */
+        /* BLOCK: Capabilities Section Grid */
         .c-features {
-            padding: 5rem 0;
+            padding: 4rem 0;
             width: 100%;
-            animation: fadeIn 0.3s ease-out forwards;
+            animation: circuitBoot 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .c-features__title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        .c-features__title-accent {
+            color: var(--primary);
+        }
+        .c-features__subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            font-size: 1.05rem;
         }
         .c-features__grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
-            margin-top: 2rem;
         }
 
-        /* BLOCK: Card Layout Component */
+        /* BLOCK: Informational Micro-Matrix Card */
         .c-card {
             background-color: var(--bg-card);
             padding: 2.5rem;
-            border-radius: 8px;
-            border: 1px solid #2a2a2a;
+            border-radius: 6px;
+            border: 1px solid #142a4a;
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
         .c-card:hover {
             border-color: var(--primary);
             transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(7, 17, 32, 0.6);
+        }
+        .c-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: var(--primary-dark);
+            opacity: 0.4;
+            transition: var(--transition);
+        }
+        .c-card:hover::before {
+            background-color: var(--primary);
+            opacity: 1;
+            box-shadow: 0 0 10px var(--primary);
         }
         .c-card__title {
             font-size: 1.3rem;
+            font-weight: 700;
             margin-bottom: 1rem;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
         .c-card__description {
             color: var(--text-muted);
             font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        /* HARDWARE STABLE ANIMATIONS */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* TIMELINE KEYFRAMES */
+        @keyframes circuitBoot {
+            from { opacity: 0; transform: scale(0.98) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
-        /* BLOCK: Responsive Media Breakpoints */
+        /* ==========================================================================
+           RESPONSIVE VIEWPORT BOUNDS
+           ========================================================================== */
         @media (max-width: 768px) {
-            .c-hero__title { font-size: 2.5rem; }
+            .c-hero__title { font-size: 2.4rem; }
             .c-header__menu-toggle { display: flex; }
             .c-header__nav-list {
                 display: none;
                 flex-direction: column;
                 position: absolute;
-                top: 70px;
+                top: 80px;
                 left: 0;
                 width: 100%;
                 background-color: var(--bg-dark);
-                border-bottom: 1px solid #2a2a2a;
-                padding: 2rem;
-                gap: 1.5rem;
+                border-bottom: 1px solid #142a4a;
+                padding: 2.5rem;
+                gap: 1.75rem;
                 text-align: center;
+                box-shadow: 0 15px 30px rgba(3, 8, 17, 0.8);
+            }
+            .c-header__nav-list--is-open {
+                display: flex !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- BLOCK: Header Architecture Layer with Query Navigation Maps -->
+
+    <!-- BLOCK: Shared Header Navigation Framework -->
     <header class="c-header">
         <div class="l-container c-header__wrapper">
-            <a href="?page=about" class="c-header__logo c-nav-trigger" data-route="about">🥔 Potato Coder</a>
-            <button class="c-header__menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
+            <a href="?page=about" class="c-header__logo c-logo-trigger" data-route="about">
+                <span class="c-header__logo-img"></span>
+                <span>POTATO CODER</span>
+            </a>
+            <button class="c-header__menu-toggle" id="menuToggle" aria-label="Open Navigation Sub-Panel">
                 <span class="c-header__toggle-bar"></span>
                 <span class="c-header__toggle-bar"></span>
                 <span class="c-header__toggle-bar"></span>
@@ -222,74 +317,92 @@
             <ul class="c-header__nav-list" id="navLinks">
                 <li><a href="?page=about" class="c-header__nav-link c-nav-trigger" data-route="about">About</a></li>
                 <li><a href="?page=capabilities" class="c-header__nav-link c-nav-trigger" data-route="capabilities">Core Capabilities</a></li>
-                <li><a href="?page=contact" class="c-header__nav-link c-nav-trigger" data-route="contact">Initialize Contact</a></li>
+                <!-- REFACTORED ELEMENT: Updated presentation string label securely to Contact Us -->
+                <li><a href="?page=contact" class="c-header__nav-link c-nav-trigger" data-route="contact">Contact Us</a></li>
             </ul>
         </div>
     </header>
 
     <!-- BLOCK: Unified Dynamic Target Root Container -->
     <main class="l-container c-router-view" id="app-view"></main>
+    <!-- ==========================================================================
+       VANILLA ROUTING ENGINE SYSTEM LOGIC
+       ========================================================================== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Immutable view templates containing structured markup segments
+            
+            // In-Memory Component Template Registry Maps
             const VIEW_REGISTRY = {
                 'about': `
                     <section class="c-hero">
-                        <h1 class="c-hero__title">Sprouting Scalable <span class="c-hero__title-accent">Code Architectures</span></h1>
-                        <p class="c-hero__description">We are a high-performance organization engineering robust software infrastructure from scratch. No fluff, just pure deterministic output.</p>
+                        <div class="c-hero__logo-canvas"></div>
+                        <h1 class="c-hero__title">System & <span class="c-hero__title-accent">Application Development</span></h1>
+                        <p class="c-hero__description">We are a high-performance organization engineering robust software infrastructure, custom modules, and fault-tolerant system solutions. Pure deterministic output.</p>
                         <button class="c-button" onclick="appRouter.navigate('contact')">Execute Mission</button>
                     </section>
                 `,
                 'capabilities': `
                     <section class="c-features">
-                        <h2 style="text-align:center; font-size:2rem; color:var(--primary);">Core Capabilities Matrix</h2>
+                        <h2 class="c-features__title">Core <span class="c-features__title-accent">Capabilities Matrix</span></h2>
+                        <p class="c-features__subtitle">Low-overhead software engineering designed for extreme predictability.</p>
                         <div class="c-features__grid">
                             <div class="c-card">
-                                <h3 class="c-card__title">🥔 Deeply Rooted Logic</h3>
-                                <p class="c-card__description">We build predictable systems optimized for high throughput, minimal overhead, and absolute system reliability.</p>
+                                <h3 class="c-card__title"><span>⚙️</span> System Architecture</h3>
+                                <p class="c-card__description">We design low-latency distributed networks, optimized enterprise systems, and scalable cloud structures built to handle dense, continuous transaction throughput.</p>
                             </div>
                             <div class="c-card">
-                                <h3 class="c-card__title">⚡ Crisp Performance</h3>
-                                <p class="c-card__description">Engineered layers designed to minimize tail latency and optimize compute utilization across distributed clouds.</p>
+                                <h3 class="c-card__title"><span>⚡</span> Infrastructure Optimization</h3>
+                                <p class="c-card__description">Engineered structural layers designed to eliminate tail latency bottlenecks, purge hidden technical debt, and shrink runtime compute memory footprints.</p>
                             </div>
                             <div class="c-card">
-                                <h3 class="c-card__title">🛡️ Hardened Skins</h3>
-                                <p class="c-card__description">Zero trust parameters baked directly into our pipelines, establishing absolute runtime isolation and data security.</p>
+                                <h3 class="c-card__title"><span>🛡️</span> Hardened Encapsulation</h3>
+                                <p class="c-card__description">Zero-trust cryptographic principles implemented directly into delivery pipelines, establishing absolute runtime boundary isolation and network security.</p>
                             </div>
                         </div>
                     </section>
                 `,
                 'contact': `
                     <section class="c-hero">
-                        <h1 class="c-hero__title"><span class="c-hero__title-accent">Initialize Contact</span></h1>
-                        <p class="c-hero__description">Connect directly with our core engineering cell. Submit system telemetry specifications or architecture inquiries.</p>
+                        <h1 class="c-hero__title"><span class="c-hero__title-accent">Contact Us</span></h1>
+                        <p class="c-hero__description">Connect directly with our engineering core cell. Submit system architecture specifications or deployment specification blueprints for review.</p>
                         <div style="margin-top:2rem;">
                             <a href="mailto:ops@potatocoder.org" class="c-button" style="text-decoration:none;">Open Secured Channel</a>
                         </div>
                     </section>
                 `
             };
-            // Micro SPA Router Engine Architecture Class Definition
+            // Micro SPA Query-Parameter Router Instance Architecture Class
             class ParameterRouter {
-                constructor(views, viewContainer, linksClass) {
+                constructor(views, viewContainer, linksClass, logoClass) {
                     this.views = views;
                     this.container = viewContainer;
                     this.linksClass = linksClass;
+                    this.logoClass = logoClass;
                     this.initListeners();
                 }
 
                 initListeners() {
-                    // Global Event Delegation for dynamic navigation anchors
+                    // Global Event Delegation capture loop
                     document.body.addEventListener('click', (e) => {
+                        // Capture target for standard navigation links
                         const targetAnchor = e.target.closest(`.${this.linksClass}`);
                         if (targetAnchor) {
                             e.preventDefault();
                             const targetState = targetAnchor.getAttribute('data-route');
                             this.navigate(targetState);
+                            return;
+                        }
+
+                        // Isolated capture target for the non-underlining corporate logo anchor
+                        const targetLogo = e.target.closest(`.${this.logoClass}`);
+                        if (targetLogo) {
+                            e.preventDefault();
+                            const targetState = targetLogo.getAttribute('data-route');
+                            this.navigate(targetState);
                         }
                     });
 
-                    // Listens for browser forward/back operations cleanly over query alterations
+                    // Synchronizes view layers cleanly on native browser back/forward history actions
                     window.addEventListener('popstate', () => {
                         this.renderRoute(this.getQueryState());
                     });
@@ -319,6 +432,7 @@
                 }
 
                 updateActiveUIState(currentKey) {
+                    // Query filters out the logo completely, scanning exclusively standard navigation tags
                     document.querySelectorAll(`.${this.linksClass}`).forEach(link => {
                         const targetRoute = link.getAttribute('data-route');
                         if (targetRoute === currentKey) {
@@ -330,11 +444,12 @@
                 }
             }
 
-            // Global instance assignment and application instantiation
+            // Instantiation passes independent linksClass and logoClass variables
             window.appRouter = new ParameterRouter(
                 VIEW_REGISTRY, 
                 document.getElementById('app-view'), 
-                'c-nav-trigger'
+                'c-nav-trigger',
+                'c-logo-trigger'
             );
 
             // Fetch initial state string directly from the file parameter segment on page entry
