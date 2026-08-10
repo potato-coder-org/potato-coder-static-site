@@ -6,7 +6,7 @@
     <meta name="description" content="Potato Coder - Turning raw logic into crisp, high-performance software.">
     <title>Potato Coder | Enterprise Software Craftsmanship</title>
     <style>
-        /* Design System Variables */
+        /* Design System Variables & Global Layout Reset */
         :root {
             --primary: #d4a373; 
             --primary-dark: #b58253;
@@ -17,13 +17,11 @@
             --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-
         body {
             font-family: var(--font-stack);
             background-color: var(--bg-dark);
@@ -32,16 +30,13 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
-
-        /* BLOCK: Layout Container */
         .l-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
-
-        /* BLOCK: Header */
+        /* BLOCK: Header Component */
         .c-header {
             border-bottom: 1px solid #2a2a2a;
             position: sticky;
@@ -85,24 +80,39 @@
             gap: 2rem;
             list-style: none;
         }
-        /* MODIFIER: Active/Open Mobile Menu */
         .c-header__nav-list--is-open {
             display: flex !important;
         }
         .c-header__nav-link {
-            color: var(--text-light);
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 0.95rem;
             transition: var(--transition);
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
         }
         .c-header__nav-link:hover {
             color: var(--primary);
         }
+        .c-header__nav-link--is-active {
+            color: var(--primary) !important;
+            border-bottom: 2px solid var(--primary);
+            font-weight: 600;
+        }
 
-        /* BLOCK: Hero Section */
+        /* BLOCK: Router Target View Container */
+        .c-router-view {
+            min-height: calc(100vh - 70px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* BLOCK: Hero Elements layout */
         .c-hero {
-            padding: 8rem 0 5rem;
+            padding: 5rem 0;
             text-align: center;
+            animation: fadeIn 0.3s ease-out forwards;
         }
         .c-hero__title {
             font-size: 3.5rem;
@@ -121,7 +131,7 @@
             margin: 0 auto 2.5rem;
         }
 
-        /* BLOCK: Button */
+        /* BLOCK: Button Action Component */
         .c-button {
             background-color: var(--primary);
             color: #121212;
@@ -138,22 +148,21 @@
             background-color: var(--primary-dark);
             transform: translateY(-2px);
         }
-        /* MODIFIER: Hero placement button variant if needed later */
-        .c-button--hero {
-            box-shadow: 0 4px 14px rgba(212, 163, 115, 0.2);
-        }
 
-        /* BLOCK: Features Grid */
+        /* BLOCK: Capabilities Grid Component */
         .c-features {
             padding: 5rem 0;
+            width: 100%;
+            animation: fadeIn 0.3s ease-out forwards;
         }
         .c-features__grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
+            margin-top: 2rem;
         }
 
-        /* BLOCK: Card */
+        /* BLOCK: Card Layout Component */
         .c-card {
             background-color: var(--bg-card);
             padding: 2.5rem;
@@ -175,16 +184,15 @@
             font-size: 0.95rem;
         }
 
-        /* Responsive Breakpoints using BEM Context */
+        /* HARDWARE STABLE ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* BLOCK: Responsive Media Breakpoints */
         @media (max-width: 768px) {
-            .c-hero__title {
-                font-size: 2.5rem;
-            }
-
-            .c-header__menu-toggle {
-                display: flex;
-            }
-
+            .c-hero__title { font-size: 2.5rem; }
+            .c-header__menu-toggle { display: flex; }
             .c-header__nav-list {
                 display: none;
                 flex-direction: column;
@@ -202,71 +210,143 @@
     </style>
 </head>
 <body>
-
+    <!-- BLOCK: Header Architecture Layer with Query Navigation Maps -->
     <header class="c-header">
         <div class="l-container c-header__wrapper">
-            <a href="#" class="c-header__logo">🥔 Potato Coder</a>
+            <a href="?page=about" class="c-header__logo c-nav-trigger" data-route="about">🥔 Potato Coder</a>
             <button class="c-header__menu-toggle" id="menuToggle" aria-label="Toggle Navigation">
                 <span class="c-header__toggle-bar"></span>
                 <span class="c-header__toggle-bar"></span>
                 <span class="c-header__toggle-bar"></span>
             </button>
             <ul class="c-header__nav-list" id="navLinks">
-                <li><a href="#about" class="c-header__nav-link">About</a></li>
-                <li><a href="#services" class="c-header__nav-link">Core Capabilities</a></li>
-                <li><a href="#contact" class="c-header__nav-link">Initialize Contact</a></li>
+                <li><a href="?page=about" class="c-header__nav-link c-nav-trigger" data-route="about">About</a></li>
+                <li><a href="?page=capabilities" class="c-header__nav-link c-nav-trigger" data-route="capabilities">Core Capabilities</a></li>
+                <li><a href="?page=contact" class="c-header__nav-link c-nav-trigger" data-route="contact">Initialize Contact</a></li>
             </ul>
         </div>
     </header>
 
-    <main>
-        <section class="l-container c-hero" id="about">
-            <h1 class="c-hero__title">Sprouting Scalable <span class="c-hero__title-accent">Code Architectures</span></h1>
-            <p class="c-hero__description">We are a high-performance organization engineering robust software infrastructure from scratch. No fluff, just pure deterministic output.</p>
-            <button class="c-button c-button--hero" id="ctaButton">Execute Mission</button>
-        </section>
-
-        <section class="l-container c-features" id="services">
-            <div class="c-features__grid">
-                <div class="c-card">
-                    <h3 class="c-card__title">🥔 Deeply Rooted Logic</h3>
-                    <p class="c-card__description">We build predictable systems optimized for high throughput, minimal overhead, and absolute system reliability.</p>
-                </div>
-                <div class="c-card">
-                    <h3 class="c-card__title">⚡ Crisp Performance</h3>
-                    <p class="c-card__description">Engineered layers designed to minimize tail latency and optimize compute utilization across distributed clouds.</p>
-                </div>
-                <div class="c-card">
-                    <h3 class="c-card__title">🛡️ Hardened Skins</h3>
-                    <p class="c-card__description">Zero trust parameters baked directly into our pipelines, establishing absolute runtime isolation and data security.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
+    <!-- BLOCK: Unified Dynamic Target Root Container -->
+    <main class="l-container c-router-view" id="app-view"></main>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const DOM = {
-                menuToggle: document.getElementById('menuToggle'),
-                navLinks: document.getElementById('navLinks'),
-                ctaButton: document.getElementById('ctaButton')
+            // Immutable view templates containing structured markup segments
+            const VIEW_REGISTRY = {
+                'about': `
+                    <section class="c-hero">
+                        <h1 class="c-hero__title">Sprouting Scalable <span class="c-hero__title-accent">Code Architectures</span></h1>
+                        <p class="c-hero__description">We are a high-performance organization engineering robust software infrastructure from scratch. No fluff, just pure deterministic output.</p>
+                        <button class="c-button" onclick="appRouter.navigate('contact')">Execute Mission</button>
+                    </section>
+                `,
+                'capabilities': `
+                    <section class="c-features">
+                        <h2 style="text-align:center; font-size:2rem; color:var(--primary);">Core Capabilities Matrix</h2>
+                        <div class="c-features__grid">
+                            <div class="c-card">
+                                <h3 class="c-card__title">🥔 Deeply Rooted Logic</h3>
+                                <p class="c-card__description">We build predictable systems optimized for high throughput, minimal overhead, and absolute system reliability.</p>
+                            </div>
+                            <div class="c-card">
+                                <h3 class="c-card__title">⚡ Crisp Performance</h3>
+                                <p class="c-card__description">Engineered layers designed to minimize tail latency and optimize compute utilization across distributed clouds.</p>
+                            </div>
+                            <div class="c-card">
+                                <h3 class="c-card__title">🛡️ Hardened Skins</h3>
+                                <p class="c-card__description">Zero trust parameters baked directly into our pipelines, establishing absolute runtime isolation and data security.</p>
+                            </div>
+                        </div>
+                    </section>
+                `,
+                'contact': `
+                    <section class="c-hero">
+                        <h1 class="c-hero__title"><span class="c-hero__title-accent">Initialize Contact</span></h1>
+                        <p class="c-hero__description">Connect directly with our core engineering cell. Submit system telemetry specifications or architecture inquiries.</p>
+                        <div style="margin-top:2rem;">
+                            <a href="mailto:ops@potatocoder.org" class="c-button" style="text-decoration:none;">Open Secured Channel</a>
+                        </div>
+                    </section>
+                `
             };
+            // Micro SPA Router Engine Architecture Class Definition
+            class ParameterRouter {
+                constructor(views, viewContainer, linksClass) {
+                    this.views = views;
+                    this.container = viewContainer;
+                    this.linksClass = linksClass;
+                    this.initListeners();
+                }
 
-            const toggleNavigation = () => {
-                const isOpened = DOM.navLinks.classList.toggle('c-header__nav-list--is-open');
-                DOM.menuToggle.setAttribute('aria-expanded', isOpened);
-            };
+                initListeners() {
+                    // Global Event Delegation for dynamic navigation anchors
+                    document.body.addEventListener('click', (e) => {
+                        const targetAnchor = e.target.closest(`.${this.linksClass}`);
+                        if (targetAnchor) {
+                            e.preventDefault();
+                            const targetState = targetAnchor.getAttribute('data-route');
+                            this.navigate(targetState);
+                        }
+                    });
 
-            DOM.menuToggle.addEventListener('click', toggleNavigation);
+                    // Listens for browser forward/back operations cleanly over query alterations
+                    window.addEventListener('popstate', () => {
+                        this.renderRoute(this.getQueryState());
+                    });
+                }
 
-            DOM.ctaButton.addEventListener('click', () => {
-                alert('Initialization sequence deployed. Welcome to Potato Coder.');
-            });
+                getQueryState() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    return urlParams.get('page') || 'about';
+                }
 
-            DOM.navLinks.querySelectorAll('.c-header__nav-link').forEach(link => {
-                link.addEventListener('click', () => {
-                    DOM.navLinks.classList.remove('c-header__nav-list--is-open');
-                });
+                navigate(stateKey) {
+                    const currentParams = new URLSearchParams(window.location.search);
+                    if (currentParams.get('page') !== stateKey) {
+                        const newUrl = `${window.location.pathname}?page=${stateKey}`;
+                        window.history.pushState(null, null, newUrl);
+                        this.renderRoute(stateKey);
+                    }
+                }
+
+                renderRoute(stateKey) {
+                    const cleanKey = this.views[stateKey] ? stateKey : 'about';
+                    this.container.innerHTML = this.views[cleanKey];
+                    this.updateActiveUIState(cleanKey);
+                    
+                    // Force mobile navigation menu structural collapse on component render
+                    document.getElementById('navLinks').classList.remove('c-header__nav-list--is-open');
+                }
+
+                updateActiveUIState(currentKey) {
+                    document.querySelectorAll(`.${this.linksClass}`).forEach(link => {
+                        const targetRoute = link.getAttribute('data-route');
+                        if (targetRoute === currentKey) {
+                            link.classList.add('c-header__nav-link--is-active');
+                        } else {
+                            link.classList.remove('c-header__nav-link--is-active');
+                        }
+                    });
+                }
+            }
+
+            // Global instance assignment and application instantiation
+            window.appRouter = new ParameterRouter(
+                VIEW_REGISTRY, 
+                document.getElementById('app-view'), 
+                'c-nav-trigger'
+            );
+
+            // Fetch initial state string directly from the file parameter segment on page entry
+            appRouter.renderRoute(appRouter.getQueryState());
+
+            // Responsive Mobile UI Hamburger Binding Engine
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            menuToggle.addEventListener('click', () => {
+                const isOpened = navLinks.classList.toggle('c-header__nav-list--is-open');
+                menuToggle.setAttribute('aria-expanded', isOpened);
             });
         });
     </script>
